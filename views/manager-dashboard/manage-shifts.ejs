@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../templates/head.ejs') %>
+
+<script>
+    /**
+     * Adds new shift to the system
+     */
+    function add_shift() {
+        
+        event.preventDefault();
+
+        var formData = new FormData();
+
+        var new_shift_details = {
+            "start_dt_time": $("#new_shift_start_dt_time").val(),
+            "end_dt_time": $("#new_shift_end_dt_time").val(),
+            "location": $("#new_shift_location").val(),
+            "staff_id": $("#new_shift_staff").val()
+        }
+
+        formData.set("new_shift_details", JSON.stringify(new_shift_details))
+
+        var ajaxRequest = getAjaxInstance();
+
+        ajaxRequest.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var response = JSON.parse(this.responseText);
+
+                if (response.status == "failed") {
+                    console.error("Something went wrong at the server end. Please try again.");
+                    return;
+                } else if (response.status == "success") {
+                    $.notify("Success", "success");
+                    $("#add_shift_modal").hide();
+                    document.getElementById("add_shift_modal").reset();
+                }
+            }
+        };
+
+        send_request(ajaxRequest, "POST", "/business_signup", formData);
+    }
+
+    /**
+     * Hides the add_shift_modal and clears the form fields if any
+     */
+    function cancel_add_shift() {
+        $("#add_shift_modal").hide();
+        document.getElementById("add_shift_modal").reset();
+    }
+</script>
+
+    <body class="fix-header fix-sidebar card-no-border">
+        <%- include('../templates/preloader.ejs') %>
+            <!-- ============================================================== -->
+            <!-- Main wrapper - style you can find in pages.scss -->
+            <!-- ============================================================== -->
+            <div id="main-wrapper">
+
+                <%- include('../templates/navbar.ejs') %>
+
+                    <%- include('../templates/sidebar.ejs') %>
+
+                        <!-- ============================================================== -->
+                        <!-- Page wrapper  -->
+                        <!-- ============================================================== -->
+                        <div class="page-wrapper">
+                            <div class="container-fluid">
+                                <!-- ============================================================== -->
+                                <!-- Bread crumb and right sidebar toggle -->
+                                <!-- ============================================================== -->
+                                <div class="row page-titles">
+                                    <div class="col-md-5 align-self-center">
+                                        <h3 class="text-themecolor">Dashboard</h3>
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                                            <li class="breadcrumb-item active">Manage Shifts</li>
+                                        </ol>
+                                    </div>
+                                </div>
+
+                                <!-- Page content starts here -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn-outline-dark btn btn-sm" id="add_shift_btn"
+                                            name="add_shift_btn" data-bs-toggle="modal"
+                                            data-bs-target="#add_shift_modal">
+                                            Add New Shift
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                    </div>
+                                </div>
+                                <!-- Page content ends here -->
+
+                            </div>
+                            <!-- End Container fluid  -->
+
+                            <%- include('../templates/footer.ejs') %>
+
+                        </div>
+                        <!-- End Page wrapper  -->
+            </div>
+            <!-- End Wrapper -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="add_shift_modal" tabindex="-1" aria-labelledby="add_shift_modal"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="add_shift_modal_title">Add New Shift</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="add_shift_form" onsubmit="event.preventDefault();">
+
+                                <div class="form-group mb-2">
+                                    <label for="new_shift_start_dt_time" class="control-label">Start Time</label>
+                                    <input type="datetime-local" id="new_shift_start_dt_time"
+                                        name="new_shift_start_dt_time" class="form-control" />
+                                </div>
+
+                                <div class="form-group  mb-2">
+                                    <label for="new_shift_end_dt_time" class="control-label">End Time</label>
+                                    <input type="datetime-local" id="new_shift_end_dt_time" name="new_shift_end_dt_time"
+                                        class="form-control" />
+                                </div>
+
+                                <div class="form-group mb-2">
+                                    <label for="new_shift_location" class="control-label">Location</label>
+                                    <input type="text" class="form-control" id="new_shift_location">
+                                </div>
+
+                                <div class="form-group mb-2">
+                                    <label for="new_shift_staff" class="control-label">Staff</label>
+                                    <select name="" id="" class="form-control" id="new_shift_staff"></select>
+                                </div>
+
+                                <div class="form-group mb-2 text-center">
+                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+                                        onclick="cancel_add_shift();">Cancel</button>
+                                    <button type="button" class="btn btn-outline-success"
+                                        onclick="add_shift();">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </body>
+
+</html>
