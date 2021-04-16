@@ -7,27 +7,24 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li> <a class="waves-effect waves-dark" href="index.html" aria-expanded="false"><i
+                
+                <% if ( session != null && session != undefined && session.role && session.role == "manager") { %>
+                <li> <a class="waves-effect waves-dark" href="/manager-dashboard" aria-expanded="false"><i
                             class="fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
                 </li>
-                <li> <a class="waves-effect waves-dark" href="pages-profile.html" aria-expanded="false"><i
+                <li> <a class="waves-effect waves-dark" href="" aria-expanded="false"><i
                             class="fa fa-user-circle-o"></i><span class="hide-menu">Profile</span></a>
                 </li>
-                <li> <a class="waves-effect waves-dark" href="table-basic.html" aria-expanded="false"><i
-                            class="fa fa-table"></i><span class="hide-menu">Tables</span></a>
+                <li> 
+                    <a class="waves-effect waves-dark" href="/manage_shift" aria-expanded="false"><span class="hide-menu"><i class="fa fa-tasks" aria-hidden="true"></i>
+                        Manage Shifts</span></a>
                 </li>
-                <li> <a class="waves-effect waves-dark" href="icon-fontawesome.html" aria-expanded="false"><i
-                            class="fa fa-smile-o"></i><span class="hide-menu">Icons</span></a>
+                <li> 
+                    <a class="waves-effect waves-dark" href="/staff_account_create" aria-expanded="false"><span class="hide-menu"><i class="fa fa-plus-square"></i> Staff Accounts</span></a>
                 </li>
-                <li> <a class="waves-effect waves-dark" href="map-google.html" aria-expanded="false"><i
-                            class="fa fa-globe"></i><span class="hide-menu">Map</span></a>
-                </li>
-                <li> <a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false"><i
-                            class="fa fa-bookmark-o"></i><span class="hide-menu">Blank</span></a>
-                </li>
-                <li> <a class="waves-effect waves-dark" href="pages-error-404.html" aria-expanded="false"><i
-                            class="fa fa-question-circle"></i><span class="hide-menu">404</span></a>
-                </li>
+                <% } %>
+                <% if ( session != null && session != undefined && session.role && session.role == "staff") { %>
+                <% } %>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

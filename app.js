@@ -28,8 +28,12 @@ app.get("/", (req, res) => {
 
     req.session.role = "manager";
     req.session.shift_manager_id = 1;
-    
+
     //req.session.role = "staff"
     //req.session.staff_id = 1;
-    res.render("index.ejs");
+
+    console.log(req.session);
+
+    res.render("index.ejs", {session : req.session});
+
 })

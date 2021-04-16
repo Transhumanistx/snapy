@@ -2,21 +2,25 @@ const ShiftModel = require("../models/shiftsModel.js");
 const StaffProfileModel = require("../models/staffProfileModel.js");
 
 const manager_dashaboard_get = async (req, res) => {
-    res.render("manager-dashboard/index", {session : req.session});
+    res.render("manager-dashboard/index.ejs", {session : req.session});
 }
 
 const manage_shifts_get = async (req, res) =>{
-    res.render("manager-dashboard/manage-shifts.ejs");
+    res.render("manager-dashboard/manage-shifts.ejs", {session : req.session});
 }
 
 const manage_shifts_post = async (req, res) =>{
   
-  const new_shift = await ShiftModel.create({
-    start_dt_time: req.fields.start_dt_time,
-    end_dt_time: req.fields.end_dt_time,
-    location: req.fields.location,
-    staff_id : req.fields.staff_id
+  var new_shift_details = JSON.parse(req.fields.new_shift_details);
+
+  const new_shift = await ShiftModel.ShiftModel.create({
+    start_dt_time: new_shift_details.start_dt_time,
+    end_dt_time: new_shift_details.end_dt_time,
+    location: new_shift_details.location,
+    staff_id : new_shift_details.staff_id
   });
+
+  res.send({"status":"success"});
 
 }
 
@@ -30,7 +34,8 @@ const manage_shifts_delete = async (req, res) =>{
 
 
 const staff_account_create_get = async (req, res) =>{
-  res.render("authentication/staff-registration.ejs");
+  console.log(req.session);
+  res.render("authentication/staff-registration.ejs", {session : req.session});
 }
 
 const staff_account_create_post = async (req, res) =>{
@@ -49,7 +54,7 @@ const staff_account_create_post = async (req, res) =>{
     staff_type: new_staff.staff_type
   });
 
-  return res.send({"status":"success"});
+  res.send({"status":"success"});
 }
 
 module.exports = {manager_dashaboard_get, manage_shifts_get, manage_shifts_post, manage_shifts_put, manage_shifts_delete, staff_account_create_get, staff_account_create_post};
