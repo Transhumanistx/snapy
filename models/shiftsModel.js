@@ -8,6 +8,7 @@ ShiftModel.init({
     // Model attributes are defined here
     shift_id:{
         type: DataTypes.NUMBER,
+        allowNull: false,
         autoIncrement: true,
         primaryKey: true
     },
@@ -25,13 +26,14 @@ ShiftModel.init({
     },
     staff_id: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     }
 }, {
   // Other model options go here
   freezeTableName: true,
-  sequelize,         // We need to pass the connection instance
-  modelName: 'Shifts' // We need to choose the model name
+  sequelize,                // We need to pass the connection instance
+  modelName: 'ShiftModel',  // We need to choose the model name
+  tableName: 'shifts'
 });
 
 // the defined model is the class itself

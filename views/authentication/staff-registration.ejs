@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    .red-star {
+        color: red;
+    }
+</style>
+
+<script>
+
+    function show_account_credentials_card() {
+        $("#basic_details_card").hide();
+        $("#account_credentials_card").show();
+    }
+
+    function show_basic_details_card() {
+
+        var formRef = document.getElementById("account_credentials_form");
+        if (!formRef.checkValidity()) {
+            return false;
+        }
+
+        $("#account_credentials_card").hide();
+        $("#basic_details_card").show();
+    }
+
+    function create_staff_account(){
+        var formData = new FormData();
+
+        var staff_type = ($("#staff_type").prop("checked")) ? "manager" : "staff"
+
+        var new_staff = {
+            "email": $("#staff_email").val(),
+            "password": $("#staff_password").val(),
+            "per_week_work_hours_limit" : $("#per_week_work_hours_limit").val(),
+            "full_name": $("#staff_full_name").val(),
+            "preferred_name": $("#staff+preferred_name").val(),
+            "phone": $("#staff_phone").val(),
+            "home_address": $("#staff_home_address").val(),
+            "staff_type" : staff_type
+        }
+
+        formData.set("new_staff", JSON.stringify(new_staff))
+
+        var ajaxRequest = getAjaxInstance();
+
+        ajaxRequest.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var response = JSON.parse(this.responseText);
+
+                if (response.status == "failed") {
+                    console.error("Something went wrong at the server end. Please try again.");
+                    return;
+                } else if (response.status == "success") {
+                    $.notify("Success", "success");
+                    // Show form to create the account again.
+                    show_account_credentials_card();
+
+                    // Clear the form to enter new values
+                    document.getElementById("account_credentials_form").reset();
+                    document.getElementById("basic_details_form").reset();
+                }
+            }
+        };
+
+        send_request(ajaxRequest, "POST", "/staff_account_create", formData);
+    }
+
+</script>
+
+<%- include('../templates/head.ejs') %>
+
+    <body class="fix-header fix-sidebar card-no-border">
+        <%- include('../templates/preloader.ejs') %>
+            <!-- ============================================================== -->
+            <!-- Main wrapper - style you can find in pages.scss -->
+            <!-- ============================================================== -->
+            <div id="main-wrapper">
+
+                <%- include('../templates/navbar.ejs') %>
+
+                    <%- include('../templates/sidebar.ejs') %>
+
+                        <!-- ============================================================== -->
+                        <!-- Page wrapper  -->
+                        <!-- ============================================================== -->
+                        <div class="page-wrapper">
+                            <div class="container-fluid">
+
+                                <!-- Page content starts here -->
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="card shadow p-3 mb-5 bg-body rounded" id="account_credentials_card">
+                                            <div class="card-body">
+
+                                                <h5 class="card-title">Account Credentials</h5>
+                                                <form onsubmit="event.preventDefault();" id="account_credentials_form" autocomplete="off">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="email" class="form-control" id="staff_email"
+                                                            placeholder="john@snapty.com.au" autocomplete="off" required>
+                                                        <label class="control-label" for="staff_email"><span class="red-star">*</span> Email address</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="password" class="form-control" id="staff_password"
+                                                            placeholder="Password" required autocomplete="off">
+                                                        <label class="control-label" for="staff_password"><span class="red-star">*</span> Password</label>
+                                                    </div>
+
+                                                    <div class="form-control mb-3">
+                                                        <input type="checkbox" id="staff_type">
+                                                        <label class="control-label" for="staff_type">This is Staff-Manager Account</label>
+                                                    </div>
+
+                                                    <div class="text-center">
+                                                        <button class="btn btn-outline-dark btn-md"
+                                                            onclick="show_basic_details_card();">Enter Basic Details
+                                                            </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="card shadow p-3 mb-5 bg-body rounded" id="basic_details_card"
+                                            style="display:none;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Basic Details</h5>
+
+                                                <form onsubmit="event.preventDefault();" id="basic_details_form" autocomplete="off">
+                                                    <div class="form-group">
+                                                        <label for="staff_full_name" class="control-label"><span
+                                                                class="red-star">*</span> Full Name</label>
+                                                        <input type="text" class="form-control" id="staff_full_name"
+                                                            required />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="staff_preferred_name" class="control-label">Preferred Name</label>
+                                                        <input type="text" class="form-control"
+                                                            id="staff_preferred_name" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="per_week_work_hours_limit"
+                                                            class="control-label"><span class="red-star">*</span> Limits
+                                                            for working hours per week</label>
+                                                        <input type="number" class="form-control"
+                                                            id="per_week_work_hours_limit" min="4" max="84" required />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="staff_home_address" class="control-label"><span
+                                                                class="red-star">*</span> Home Address</label>
+                                                        <input type="text" class="form-control" id="staff_home_address"
+                                                            required />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="staff_phone" class="control-label"><span
+                                                                class="red-star">*</span> Phone</label>
+                                                        <input type="text" class="form-control" id="staff_phone"
+                                                            required />
+                                                    </div>
+
+                                                    <div class="text-center">
+                                                        <button class="btn btn-outline-dark btn-md"
+                                                            onclick="create_staff_account();">Create Staff
+                                                            Account</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Page content ends here -->
+
+                            </div>
+                            <!-- End Container fluid  -->
+
+                            <%- include('../templates/footer.ejs') %>
+
+                        </div>
+                        <!-- End Page wrapper  -->
+            </div>
+            <!-- End Wrapper -->
+
+    </body>
+
+</html>
