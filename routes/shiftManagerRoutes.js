@@ -3,6 +3,7 @@ const router = express.Router();
 const shiftManagerController = require('../controllers/shiftManagerController.js');
 
 router.get("/manager-dashboard", shiftManagerController.manager_dashaboard_get);
+router.get("/manager-profile", shiftManagerController.manager_profile_get);
 router.get("/manage_shift", shiftManagerController.manage_shifts_get);
 router.post("/manage_shift", shiftManagerController.manage_shifts_post);
 router.put("/manage_shift", shiftManagerController.manage_shifts_put);

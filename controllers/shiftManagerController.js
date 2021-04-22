@@ -10,6 +10,10 @@ const manager_dashaboard_get = async (req, res) => {
     res.render("manager-dashboard/index.ejs", {session : req.session});
 }
 
+const manager_profile_get = async (req, res) =>{
+  res.render("manager-dashboard/manager-profile.ejs", {session : req.session});
+}
+
 const manage_shifts_get = async (req, res) =>{
     res.render("manager-dashboard/manage-shifts.ejs", {session : req.session});
 }
@@ -51,7 +55,6 @@ const staff_account_create_post = async (req, res) =>{
 
   var new_staff = JSON.parse(req.fields.new_staff);
 
-  await StaffProfileModel.StaffProfileModel.sync();
 
   console.log(StaffProfileModel); // This is good!
 
@@ -74,4 +77,12 @@ const staff_account_create_post = async (req, res) =>{
   
 }
 
-module.exports = {manager_dashaboard_get, manage_shifts_get, manage_shifts_post, manage_shifts_put, manage_shifts_delete, staff_account_create_get, staff_account_create_post};
+module.exports = {
+  manager_dashaboard_get,
+  manager_profile_get,
+  manage_shifts_get,
+  manage_shifts_post,
+  manage_shifts_put,
+  manage_shifts_delete,
+  staff_account_create_get,
+  staff_account_create_post};
