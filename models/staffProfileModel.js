@@ -7,7 +7,7 @@ StaffProfileModel.init({
 
     // Model attributes are defined here
     staff_id:{
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true

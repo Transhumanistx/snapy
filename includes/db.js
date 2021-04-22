@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 // Option 2: Passing parameters separately (other dialects)
-const sequelize = new Sequelize('snapty', 'root', '', {
+const sequelize = new Sequelize('test', 'root', 'password', {
     host: 'localhost',
     dialect: 'mariadb',
     pool: {

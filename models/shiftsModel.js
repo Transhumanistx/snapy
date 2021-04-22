@@ -7,7 +7,7 @@ ShiftModel.init({
 
     // Model attributes are defined here
     shift_id:{
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
@@ -35,6 +35,8 @@ ShiftModel.init({
   modelName: 'ShiftModel',  // We need to choose the model name
   tableName: 'shifts'
 });
+
+
 
 // the defined model is the class itself
 console.log(ShiftModel === sequelize.models.ShiftModel); // true

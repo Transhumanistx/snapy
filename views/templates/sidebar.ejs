@@ -9,21 +9,37 @@
             <ul id="sidebarnav">
                 
                 <% if ( session != null && session != undefined && session.role && session.role == "manager") { %>
-                <li> <a class="waves-effect waves-dark" href="/manager-dashboard" aria-expanded="false"><i
-                            class="fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
-                </li>
-                <li> <a class="waves-effect waves-dark" href="" aria-expanded="false"><i
-                            class="fa fa-user-circle-o"></i><span class="hide-menu">Profile</span></a>
-                </li>
-                <li> 
-                    <a class="waves-effect waves-dark" href="/manage_shift" aria-expanded="false"><span class="hide-menu"><i class="fa fa-tasks" aria-hidden="true"></i>
-                        Manage Shifts</span></a>
-                </li>
-                <li> 
-                    <a class="waves-effect waves-dark" href="/staff_account_create" aria-expanded="false"><span class="hide-menu"><i class="fa fa-plus-square"></i> Staff Accounts</span></a>
-                </li>
+                    <li> <a class="waves-effect waves-dark" href="/shiftManager/manager-dashboard" aria-expanded="false"><i
+                                class="fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
+                    </li>
+                    <li> <a class="waves-effect waves-dark" href="" aria-expanded="false"><i
+                                class="fa fa-user-circle-o"></i><span class="hide-menu">Profile</span></a>
+                    </li>
+                    <li> 
+                        <a class="waves-effect waves-dark" href="/shiftManager/manage_shift" aria-expanded="false"><span class="hide-menu"><i class="fa fa-tasks" aria-hidden="true"></i>
+                            Manage Shifts</span></a>
+                    </li>
+                    <li> 
+                        <a class="waves-effect waves-dark" href="/shiftManager/staff_account_create" aria-expanded="false"><span class="hide-menu"><i class="fa fa-plus-square"></i> Staff Accounts</span></a>
+                    </li>
                 <% } %>
                 <% if ( session != null && session != undefined && session.role && session.role == "staff") { %>
+                    
+                    <li> <a class="waves-effect waves-dark" href="/staffMember/staff-dashboard" aria-expanded="false"><i
+                        class="fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
+                    </li>
+                    <li> <a class="waves-effect waves-dark" href="" aria-expanded="false"><i
+                                class="fa fa-user-circle-o"></i><span class="hide-menu">Profile</span></a>
+                    </li>
+                    <li> 
+                        <a class="waves-effect waves-dark" href="/staffMember/manage_shift" aria-expanded="false"><span class="hide-menu"><i class="fa fa-tasks" aria-hidden="true"></i>
+                            View Shifts</span></a>
+                    </li>
+                    <li> 
+                        <a class="waves-effect waves-dark" href="/staffMember/view_pending_requests" aria-expanded="false"><span class="hide-menu"><i class="fa fa-plus-square"></i>
+                            Pending Requests</span></a>
+                    </li>
+
                 <% } %>
             </ul>
         </nav>

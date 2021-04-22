@@ -5,6 +5,7 @@ const formidableMiddleware = require('express-formidable');
 
 // Requireing routes 
 const shiftManagerRoutes = require("./routes/shiftManagerRoutes");
+const staffMemberRoutes = require("./routes/staffMemberRoutes");
 var app = express();
 
 app.listen(3000);
@@ -22,17 +23,18 @@ app.use(session({
 app.use(formidableMiddleware());
 
 // Registering the routes
-app.use(shiftManagerRoutes);
+app.use('/shiftManager',shiftManagerRoutes);
+app.use('/staffMember',staffMemberRoutes);
 
 app.get("/", (req, res) => {
 
-    req.session.role = "manager";
-    req.session.shift_manager_id = 1;
+    // req.session.role = "manager";
+    // req.session.shift_manager_id = 1;
 
     //req.session.role = "staff"
     //req.session.staff_id = 1;
 
-    console.log(req.session);
+    // console.log(req.session);
 
     res.render("index.ejs", {session : req.session});
 
