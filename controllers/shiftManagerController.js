@@ -1,7 +1,7 @@
 const ShiftModel = require("../models/shiftsModel.js");
 const StaffProfileModel = require("../models/staffProfileModel.js");
 
-const { addNewStaff } = require("../services/shiftManagerServices");
+const { addNewShift, addNewStaff } = require("../services/shiftManagerServices");
 
 const manager_dashaboard_get = async (req, res) => {
     req.session.role = "manager";
@@ -23,7 +23,13 @@ const manage_shifts_post = async (req, res) =>{
   var new_shift_details = JSON.parse(req.fields.new_shift_details);
 
   await ShiftModel.ShiftModel.sync();
-  
+
+
+  await addNewShift(new_shift_details)
+  .then((result) => {
+    console.log(result);
+    res.send({"status":"success"});
+  })
 
   const new_shift = await ShiftModel.ShiftModel.create({
     start_dt_time: new_shift_details.start_dt_time,

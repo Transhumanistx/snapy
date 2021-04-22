@@ -1,16 +1,21 @@
 const ShiftModel = require("../models/shiftsModel.js");
 const StaffProfileModel = require("../models/staffProfileModel.js");
 
-// const createShiftTable = () => {
-    
-//     ShiftModel.ShiftModel.sync()
-//     .then(() => {
-//         console.log("Table created successfully")
-//     })
-//     .catch((err) => {
-//         console.log()
-//     });
-// }
+const addNewShift = (new_shift_details) => {
+    return new Promise((resolve, reject) => {
+
+        ShiftModel.ShiftModel.create({
+            start_dt_time: new_shift_details.start_dt_time,
+            end_dt_time: new_shift_details.end_dt_time,
+            location: new_shift_details.location,
+            staff_id : new_shift_details.staff_id
+          }).then((result) => {
+            resolve(result);
+        }).catch((err) => {
+            reject(err);
+        });
+    })
+}
 
 const addNewStaff = (new_staff) => {
     return new Promise((resolve, reject) => {
@@ -32,5 +37,6 @@ const addNewStaff = (new_staff) => {
 }
 
 module.exports = {
+    addNewShift,
     addNewStaff
 }
