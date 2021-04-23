@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 // Option 2: Passing parameters separately (other dialects)
 const sequelize = new Sequelize('snapty', 'root', '', {
     host: 'localhost',
-    dialect: 'mariadb',
+    dialect: 'mysql',
     pool: {
         max: 5,
         min: 0,

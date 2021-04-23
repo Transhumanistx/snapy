@@ -1,3 +1,4 @@
+// Import the shift Model
 const ShiftModel = require("../models/shiftsModel.js");
 const StaffProfileModel = require("../models/staffProfileModel.js");
 
@@ -9,6 +10,7 @@ const manage_shifts_get = async (req, res) =>{
     res.render("manager-dashboard/manage-shifts.ejs", {session : req.session});
 }
 
+// creates shifts 
 const manage_shifts_post = async (req, res) =>{
   
   var new_shift_details = JSON.parse(req.fields.new_shift_details);

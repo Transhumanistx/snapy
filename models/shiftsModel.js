@@ -5,7 +5,7 @@ class ShiftModel extends Model {}
 
 ShiftModel.init({
 
-    // Model attributes are defined here
+    // Model attributes are defined here 
     shift_id:{
         type: DataTypes.NUMBER,
         allowNull: false,
