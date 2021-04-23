@@ -28,19 +28,17 @@ describe("shiftCreationController.shiftManagerController", () => {
         expect(typeof shiftCreationController.manage_shifts_post).toBe("function");
     });
 
-    // Case 2: We want to make sure that the shiftsModel actually trying to create a model
-    it("It should Call shiftsModels.crete", () => {
-        let req, res, next;
+       
+   it("should return 201", async() =>{
+    req = httpMocks.createRequest();
+    res = httpMocks.createResponse();
+    next = null; 
+    req.body = mData;
+       
+    await shiftCreationController.manage_shifts_post(req,res,next);
+    expect(res.statusCode).toBe(201);
 
-        req = httpMocks.createRequest();
-        res = httpMocks.createResponse();
-        next = null; 
-        req.body = mData;
-
-        shiftCreationController.manage_shifts_post(res, req, next); // we are expecting a model to be created
-        expect(shiftModels.create).toBeCalledWith(mData); // we referenced the shiftsModel where we override the actuall create
-    })
-
+   });
 
 });
 
